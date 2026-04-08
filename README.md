@@ -50,6 +50,8 @@ checker/
 ├── main.py                   # локальный CLI-тест валидатора
 ├── requirements.txt
 └── core/
+    ├── data/
+    │   └── wmi_manufacturers.json # справочник WMI -> производитель
     ├── handlers/
     │   ├── start.py          # /start
     │   └── vin.py            # обработка VIN из сообщений
@@ -71,13 +73,19 @@ checker/
 pip install -r requirements.txt
 ```
 
-4. Создайте файл `.env` в корне проекта (можно скопировать из `.env.example`):
+4. Создайте файл `.env` в корне проекта:
+
+```bash
+cp .env.example .env
+```
+
+5. Добавьте токен бота в `.env`:
 
 ```env
 BOT_TOKEN=your_telegram_bot_token_here
 ```
 
-5. Запустите бота:
+6. Запустите бота:
 
 ```bash
 python bot.py

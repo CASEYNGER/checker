@@ -1,3 +1,4 @@
+from datetime import datetime as dt
 from dataclasses import dataclass, field
 from typing import List
 
@@ -48,7 +49,7 @@ class VINValidator:
 
         is_valid = len(self.vin_value) == 17
         if not is_valid:
-            self._add_error(f'Количество знаков VIN некорректно ({len(self.vin_value)}).')
+            self._add_error(f'Количество знаков VIN некорректно: {len(self.vin_value)}')
         return is_valid
 
     def _check_forbidden_symbols(self) -> bool:
@@ -62,7 +63,7 @@ class VINValidator:
         forbidden_found = [symbol for symbol in separated_vin if symbol not in ALLOWED_SYMBOLS]
 
         if forbidden_found:
-            self._add_error(f'Найдены некорректные символы: {list(forbidden_found)}.')
+            self._add_error(f'Найдены некорректные символы: {list(forbidden_found)}')
             return False
 
         return True
@@ -76,7 +77,7 @@ class VINValidator:
 
         if not self.vin_value.isdigit():
             return True
-        self._add_error('VIN не может состоять только из цифр.')
+        self._add_error('VIN не может состоять только из цифр')
         return False
 
     def _check_is_not_only_letters(self) -> bool:
@@ -88,7 +89,7 @@ class VINValidator:
 
         if not self.vin_value.isalpha():
             return True
-        self._add_error('VIN не может состоять только из букв.')
+        self._add_error('VIN не может состоять только из букв')
         return False
 
     def _parse_vin(self) -> dict[str, str]:
@@ -118,7 +119,23 @@ class VINValidator:
         if manufacturer:
             return manufacturer
 
-        return f'Производитель WMI={wmi} не определен.'
+        return f'Производитель не определен'
+
+    def _decode_wmi_for_get_country(self) -> str | None:
+        """
+        Декодирует из кода WMI название завода-изготовитель.
+
+        :return: Название производителя по WMI или сообщение о том,
+        что производитель не определён
+        """
+
+        wmi = self._parse_vin()['WMI']
+        country = COUNTRY_CODES.get(wmi)
+
+        if country:
+            return country
+
+        return f'Страна не определена'
 
     def _parse_country_code(self) -> str:
         """
@@ -171,16 +188,17 @@ class VINValidator:
         manufacturer = self._decode_wmi()
 
         # Проверка страны
-        country_code = self._parse_country_code()
-        country = COUNTRY_CODES.get(country_code)
-        if country is None:
-            self._add_error('Неизвестная страна.')
+        country = self._decode_wmi_for_get_country()
+        if country not in COUNTRY_CODES.values():
+            self._add_error('Неизвестный WMI')
 
         # Проверка кода
         model_year_code = self._parse_model_year_code()
         model_year = YEAR_CODES.get(model_year_code)
         if model_year is None:
-            self._add_error('Неизвестный код модельного года.')
+            self._add_error('Неизвестный код модельного года')
+        elif model_year > dt.now().year:
+            self._add_error('Год выпуска не может быть меньше текущего')
 
         if self.errors:
             return VINValidationResult(

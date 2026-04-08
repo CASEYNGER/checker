@@ -46,7 +46,9 @@ async def main() -> None:
 
     bot =  Bot(
         token=TOKEN,
-        default=DefaultBotProperties(parse_mode=PARSE_MODE),
+        default=DefaultBotProperties(
+            parse_mode=PARSE_MODE
+        ),
     )
     storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
