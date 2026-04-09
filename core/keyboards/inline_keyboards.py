@@ -7,7 +7,6 @@
 
 Клавиатуры используются для навигации между сообщениями через callback_data.
 """
-
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 
@@ -28,6 +27,30 @@ def start_keyboard() -> InlineKeyboardMarkup:
                 InlineKeyboardButton(
                     text='Что ты умеешь?',
                     callback_data='what_can_you_do'
+                ),
+            ],
+            [
+                InlineKeyboardButton(
+                    text='Что такое VIN?',
+                    callback_data='what_is_vin'
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text='Что такое ISO-3779?',
+                    callback_data='what_is_iso_3779'
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text='Что такое модельный год?',
+                    callback_data='what_is_model_year'
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    text='Что такое контрольный знак?',
+                    callback_data='what_is_control_symbol'
                 )
             ]
         ]

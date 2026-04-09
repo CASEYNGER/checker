@@ -25,6 +25,7 @@ from dotenv import load_dotenv
 
 from core.handlers.start import router as start_router
 from core.handlers.vin import router as vin_router
+from core.handlers.faq import router as faq_router
 from core.logging.logger import logger
 from core.middlewares.rate_limit import RateLimitMiddleware
 from core.utils.global_configs import PARSE_MODE, OWNER_ID
@@ -111,7 +112,7 @@ async def main() -> None:
         )
     )
 
-    dp.include_routers(start_router, vin_router)
+    dp.include_routers(start_router, vin_router, faq_router)
 
     try:
         await dp.start_polling(bot, lifespan=lifespan(bot))

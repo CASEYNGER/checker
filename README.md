@@ -1,4 +1,4 @@
-# VIN Decoder Bot v1.0.2
+# VIN Decoder Bot v1.0.3
 
 Telegram-бот и CLI-инструмент для проверки и расшифровки VIN (ISO-3779).
 
@@ -30,6 +30,7 @@ checker/
 │   └── tests.py
 └── core/
     ├── handlers/
+    │   ├── faq.py
     │   ├── start.py
     │   └── vin.py
     ├── middlewares/

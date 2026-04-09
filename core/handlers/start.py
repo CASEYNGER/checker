@@ -88,9 +88,7 @@ async def show_capabilities(callback: CallbackQuery) -> None:
         '- Проверить соответствие VIN ISO-3779;\n'
         '- Определить информацию по WMI;\n'
         '– Расшифровать модельный год выпуска ТС;\n'
-        '- Проверить контрольный символ.\n\n'
-        '*ВАЖНО*\n'
-        'Я пока ничего не знаю о транспортных средствах старше 2000 года :(',
+        '- Проверить контрольный символ.',
         reply_markup=capabilities_keyboard()
     )
     await callback.answer()
