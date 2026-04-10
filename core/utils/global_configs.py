@@ -10,4 +10,4 @@ from dotenv import load_dotenv
 load_dotenv()
 
 PARSE_MODE = ParseMode.MARKDOWN
-OWNER_ID = int(os.getenv('OWNER_ID', 'O'))
+OWNER_ID = int(os.getenv('OWNER_ID'))

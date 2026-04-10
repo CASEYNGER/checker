@@ -208,3 +208,6 @@ __marimo__/
 
 # Private IP data
 core/data/wmi_flat.json
+
+# Jupyter Notebooks
+/*.ipynb

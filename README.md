@@ -1,4 +1,4 @@
-# VIN Decoder Bot v1.0.3
+# VIN Decoder Bot v1.0.4
 
 Telegram-бот и CLI-инструмент для проверки и расшифровки VIN (ISO-3779).
 
@@ -53,11 +53,13 @@ checker/
 
 ```env
 BOT_TOKEN=your_telegram_bot_token_here
-WMI_DATA_PATH=/absolute/path/to/private/wmi.json
+WMI_HOST_PATH=<your_path>/wmi_flat.json
+OWNER_ID=123456789
 ```
 
 - `BOT_TOKEN` — токен Telegram-бота;
-- `WMI_DATA_PATH` — обязательный абсолютный путь к приватному WMI-справочнику (не хранится в репозитории).
+- `WMI_HOST_PATH` — путь к приватному WMI-файлу на хосте;
+- `OWNER_ID` — Telegram ID владельца (для bypass rate-limit).
 
 ## Запуск
 
@@ -77,6 +79,16 @@ python main.py
 
 ```bash
 pytest toolbox/tests.py -q
+```
+
+## Запуск в Docker (без compose)
+
+```bash
+docker build -t my-app .
+```
+
+```bash
+docker run --rm --env-file .env my-app
 ```
 
 ## Как работает валидация
